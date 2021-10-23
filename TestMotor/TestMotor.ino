@@ -14,7 +14,7 @@ void setup() {
 void loop() {
   // put your main code here, to run repeatedly:
   digitalWrite(IN1,LOW);
-  digitalWrite(IN2,HIGH);
+  digitalWrite(IN2,HIGH); 
   analogWrite(ENA,255);
 
 }
