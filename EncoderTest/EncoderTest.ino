@@ -30,7 +30,7 @@ void loop() {
   if (Serial.available()) {
     Serial.read();
     Serial.println("Reset both motor to zero");
-    knobLeft.write(0);
-    knobRight.write(0);
+    motorLeft.write(0);
+    motorRight.write(0);
   }
 }
