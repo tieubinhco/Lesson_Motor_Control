@@ -13,8 +13,7 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
-  digitalWrite(IN1,LOW);
-  digitalWrite(IN2,HIGH); 
-  analogWrite(ENA,255);
-
+  digitalWrite(IN1,HIGH);
+  digitalWrite(IN2,LOW); 
+  analogWrite(ENA,100); //1 byte value 0 - 255 dec  0x00 - 0xFF HEX
 }
