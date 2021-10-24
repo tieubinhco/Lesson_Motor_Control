@@ -2,7 +2,6 @@
 #define IN2 8
 #define ENA 5
 
-
 void setup() {
   // put your setup code here, to run once:
   pinMode(IN1,OUTPUT);
