@@ -12,7 +12,7 @@ float currentAngle=0;
 float err=0;
 int pwmValue=0;  //0-255
 int direct=0;
-float Kp=50;
+float Kp=1.2;
 
 void setup() {
   pinMode(ENA,OUTPUT);
@@ -47,6 +47,13 @@ void setup() {
     }
   }
   Serial.println("Program started");
+  //Kp = 0.5 can resist change, but has steady state error
+  //Kp = 1 rotates to angle but has steady state error
+  //Kp = 1.2 rotates to angle but has steady state error
+  //Kp = 1.5 oscillates
+  //Kp = 2 oscillates
+  //Kp = 5 oscillates
+  
 }
 
 float convert_to_degree(long currentPulse)
@@ -65,12 +72,12 @@ Serial.println(int(currentAngle));
 
 err=desiredAngle-currentAngle;
 pwmValue=Kp*err;
-direct=0;
+direct=1;
 
 if (pwmValue<0)
 {
   pwmValue=abs(pwmValue);
-  direct=1;
+  direct=0;
 }
 
 if (pwmValue<30) pwmValue=30;
