@@ -82,9 +82,7 @@ if (pwmValue<0)
 
 if (pwmValue<30) pwmValue=30;
 else if(pwmValue>255) pwmValue=255;
-
 digitalWrite(IN1,direct);
 digitalWrite(IN2,!direct);
 analogWrite(ENA,pwmValue);
-
 }
