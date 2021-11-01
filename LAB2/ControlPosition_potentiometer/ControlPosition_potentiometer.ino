@@ -76,7 +76,6 @@ if (pwmValue>255) pwmValue=255;
 digitalWrite(IN1, direct); 
 digitalWrite(IN2, !direct); 
 analogWrite(ENA,pwmValue);
-delay(10);
 }
 
 float convert_to_degree(long currentPulse)
