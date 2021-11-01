@@ -11,8 +11,9 @@ long currentEncoder=0;
 long previousEncoder=0;
 long currentMillis=0;
 long previousMillis=0;
-int interval=1000;  //ms
+int interval=500;  //ms
 int direct=1;
+float angularSpeed=0;
 
 void setup() {
   pinMode(IN1,OUTPUT);
@@ -26,10 +27,12 @@ void setup() {
 
 
 void loop() {
-  float angularSpeed=read_speed();
+  angularSpeed=read_speed();
   Serial.print("Angular speed=  \t");
   Serial.println(angularSpeed);
-  
+  analogWrite(ENA,55);
+  digitalWrite(IN1,direct);
+  digitalWrite(IN2,!direct);
 }
 
 float read_speed(void)
@@ -45,7 +48,4 @@ float read_speed(void)
         previousEncoder = currentEncoder;
         return rot_speed;
     }
-    analogWrite(ENA,55);
-    digitalWrite(IN1,direct);
-    digitalWrite(IN2,!direct);
 }
