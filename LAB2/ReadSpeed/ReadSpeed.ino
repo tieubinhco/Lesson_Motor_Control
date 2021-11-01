@@ -4,7 +4,6 @@
 #define ENA 5
 #define RR A0
 
-
 Encoder motor(2,3); //2 interrupt pins
 const int oneRev=194;
 long currentEncoder=0;
@@ -23,8 +22,6 @@ void setup() {
   Serial.println("Reading speed of the motor");
   Serial.println("-----------------------------------------");
 }
-
-
 
 void loop() {
   angularSpeed=read_speed();
