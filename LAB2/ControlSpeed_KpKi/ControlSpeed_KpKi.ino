@@ -11,18 +11,20 @@ long previousEncoder=0;
 long currentMillis=0;
 long previousMillis=0;
 int interval=10;  //ms
+long deltaT=0;
 
 float currentSpeed=0;
 float previousSpeed=0;
 float vFilt=0;
 float vpreFilt=0;
 float v=0;
-float desiredSpeed=50;
+float desiredSpeed=60;
 float error=0;
 int pwmValue=100; //0 - 255 dec 0x00 - 0xFF hex
 int direct=1;  //1 clockwise  //0 counter-clockwise
 float Kp=1;  //controlsignal = Kp*error
-
+float Ki=0;
+float errorIntegral=0;
 
 void setup() {
   pinMode(IN1,OUTPUT);
@@ -42,7 +44,8 @@ void loop() {
   currentSpeed=vFilt;
   
   error= desiredSpeed-currentSpeed;
-  pwmValue=Kp*error;
+  errorIntegral=errorIntegral+error*deltaT/1.0e3;
+  pwmValue=Kp*error + Ki*errorIntegral;
   direct=1;
 
   if (pwmValue<0) 
@@ -69,7 +72,7 @@ float read_speed(void)
     //return angular speed in rpm
     currentEncoder = motor.read();
     currentMillis = millis();
-    long deltaT=(currentMillis - previousMillis);
+    deltaT=(currentMillis - previousMillis);
     if (deltaT>=interval)
     {
         float rot_speed = (float)((60000/deltaT)*(currentEncoder - previousEncoder)/oneRev);
