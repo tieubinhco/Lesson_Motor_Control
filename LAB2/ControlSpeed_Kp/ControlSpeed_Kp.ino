@@ -10,11 +10,14 @@ long currentEncoder=0;
 long previousEncoder=0;
 long currentMillis=0;
 long previousMillis=0;
-int interval=1;  //ms
+int interval=10;  //ms
 
 float currentSpeed=0;
 float previousSpeed=0;
-float desiredSpeed=700;
+float vFilt=0;
+float vpreFilt=0;
+float v=0;
+float desiredSpeed=1000;
 float error=0;
 int pwmValue=100; //0 - 255 dec 0x00 - 0xFF hex
 int direct=1;  //1 clockwise  //0 counter-clockwise
@@ -32,20 +35,25 @@ void setup() {
 }
 
 void loop() {
-  currentSpeed=read_speed();
-//  error= desiredSpeed-currentSpeed;
-//  pwmValue=Kp*error;
-//  direct=1;
-//
-//  if (pwmValue<0) 
-//  {
-//    pwmValue=abs(pwmValue);
-//    direct=0;
-//  }
-//
-//  if (pwmValue>255) pwmValue=255;
+  v=read_speed();
+  vFilt=0.854*vFilt+0.0728*v+0.0728*vpreFilt;
+  vpreFilt=v;
+  
+  currentSpeed=vFilt;
+  
+  error= desiredSpeed-currentSpeed;
+  pwmValue=Kp*error;
+  direct=1;
+
+  if (pwmValue<0) 
+  {
+    pwmValue=abs(pwmValue);
+    direct=0;
+  }
+
+  if (pwmValue>255) pwmValue=255;
     
-  analogWrite(ENA,255);
+  analogWrite(ENA,pwmValue);
   digitalWrite(IN1,direct);
   digitalWrite(IN2,!direct);
 //  Serial.print("Current speed=\t");
