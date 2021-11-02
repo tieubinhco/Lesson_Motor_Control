@@ -10,15 +10,15 @@ long currentEncoder=0;
 long previousEncoder=0;
 long currentMillis=0;
 long previousMillis=0;
-int interval=10;  //ms
+int interval=1;  //ms
 
 float currentSpeed=0;
 float previousSpeed=0;
-float desiredSpeed=300;
+float desiredSpeed=700;
 float error=0;
 int pwmValue=100; //0 - 255 dec 0x00 - 0xFF hex
 int direct=1;  //1 clockwise  //0 counter-clockwise
-float Kp=0.6;  //controlsignal = Kp*error
+float Kp=1.5;  //controlsignal = Kp*error
 
 
 void setup() {
@@ -33,19 +33,19 @@ void setup() {
 
 void loop() {
   currentSpeed=read_speed();
-  error= desiredSpeed-currentSpeed;
-  pwmValue=Kp*error;
-  direct=1;
-
-  if (pwmValue<0) 
-  {
-    pwmValue=abs(pwmValue);
-    direct=0;
-  }
-
-  if (pwmValue>255) pwmValue=255;
+//  error= desiredSpeed-currentSpeed;
+//  pwmValue=Kp*error;
+//  direct=1;
+//
+//  if (pwmValue<0) 
+//  {
+//    pwmValue=abs(pwmValue);
+//    direct=0;
+//  }
+//
+//  if (pwmValue>255) pwmValue=255;
     
-  analogWrite(ENA,pwmValue);
+  analogWrite(ENA,255);
   digitalWrite(IN1,direct);
   digitalWrite(IN2,!direct);
 //  Serial.print("Current speed=\t");
@@ -61,11 +61,18 @@ float read_speed(void)
     //return angular speed in rpm
     currentEncoder = motor.read();
     currentMillis = millis();
-    if (currentMillis - previousMillis >= interval)
+    long deltaT=(currentMillis - previousMillis);
+    if (deltaT>=interval)
     {
-        previousMillis = currentMillis;
-        float rot_speed = (float)((60000/interval)*(currentEncoder - previousEncoder)/oneRev);
+        float rot_speed = (float)((60000/deltaT)*(currentEncoder - previousEncoder)/oneRev);
         previousEncoder = currentEncoder;
+        previousMillis = currentMillis;
+        previousSpeed=rot_speed;
         return rot_speed;
     }
+    else 
+    {
+      return previousSpeed;
+    }
+
 }
