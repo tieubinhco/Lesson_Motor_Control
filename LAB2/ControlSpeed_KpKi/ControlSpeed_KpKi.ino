@@ -1,4 +1,5 @@
 #include <Encoder.h>
+#include <math.h>
 #define IN1 7
 #define IN2 8
 #define ENA 5
@@ -18,12 +19,12 @@ float previousSpeed=0;
 float vFilt=0;
 float vpreFilt=0;
 float v=0;
-float desiredSpeed=60;
+float desiredSpeed=500;
 float error=0;
 int pwmValue=100; //0 - 255 dec 0x00 - 0xFF hex
 int direct=1;  //1 clockwise  //0 counter-clockwise
-float Kp=1;  //controlsignal = Kp*error
-float Ki=0;
+float Kp=0.3;  //controlsignal = Kp*error
+float Ki=0.75;
 float errorIntegral=0;
 
 void setup() {
@@ -32,11 +33,12 @@ void setup() {
   pinMode(ENA,OUTPUT);
   pinMode(RR,INPUT);
   Serial.begin(9600);
-  Serial.println("Reading speed of the motor");
-  Serial.println("-----------------------------------------");
+//  Serial.println("Reading speed of the motor");
+//  Serial.println("-----------------------------------------");
 }
 
 void loop() {
+  desiredSpeed=500*(sin(0.7*currentMillis/1e3)>0)+200;
   v=read_speed();
   vFilt=0.854*vFilt+0.0728*v+0.0728*vpreFilt;
   vpreFilt=v;
@@ -60,10 +62,10 @@ void loop() {
   digitalWrite(IN1,direct);
   digitalWrite(IN2,!direct);
 //  Serial.print("Current speed=\t");
-  Serial.print(int(currentSpeed));
+  Serial.print(currentSpeed);
 //  Serial.print("\tDesired speed=\t");
 Serial.print(" ");
-  Serial.println(int(desiredSpeed));
+  Serial.println(desiredSpeed);
 }
 
 float read_speed(void)
