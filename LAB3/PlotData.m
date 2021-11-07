@@ -1,4 +1,4 @@
-A=load('MotorRPM5.csv');
+A=load('MotorRPM1_255.csv');
 
 RPM=A(:,1);
 Time=A(:,2);
