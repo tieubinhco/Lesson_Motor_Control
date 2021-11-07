@@ -1,4 +1,4 @@
-A=load('MotorRPM1.csv');
+A=load('MotorRPM2.csv');
 
 RPM=A(:,1);
 Time=A(:,2);
@@ -14,3 +14,6 @@ for i=2:length(RPM)
 end
 
 plot(Time,v)
+legend("Raw speed (RPM)", "Filtered speed (RPM)");
+xlabel("Time (ms)");
+ylabel("Speed (RPM)");
