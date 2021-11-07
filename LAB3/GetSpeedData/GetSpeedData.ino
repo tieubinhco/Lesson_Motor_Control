@@ -31,9 +31,7 @@ void setup() {
 
 void loop() {
   angularSpeed=read_speed();
-  vFilt=0.854*vFilt+0.0728*angularSpeed+0.0728*vpreFilt;
-  vpreFilt=angularSpeed;
-  Serial.print(vFilt);
+  Serial.print(angularSpeed);
   Serial.print("\t");
   Serial.println(millis());
   analogWrite(ENA,255);
