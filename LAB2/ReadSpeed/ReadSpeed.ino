@@ -13,6 +13,8 @@ long previousMillis=0;
 int interval=500;  //ms
 int direct=1;
 float angularSpeed=0;
+float previousSpeed=0;
+long deltaT=0;
 
 void setup() {
   pinMode(IN1,OUTPUT);
@@ -38,11 +40,18 @@ float read_speed(void)
     //return angular speed in rpm
     currentEncoder = motor.read();
     currentMillis = millis();
-    if (currentMillis - previousMillis >= interval)
+    deltaT=(currentMillis - previousMillis);
+    if (deltaT>=interval)
     {
-        previousMillis = currentMillis;
-        float rot_speed = (float)((60000/interval)*(currentEncoder - previousEncoder)/oneRev);
+        float rot_speed = (float)((60000/deltaT)*(currentEncoder - previousEncoder)/oneRev);
         previousEncoder = currentEncoder;
+        previousMillis = currentMillis;
+        previousSpeed=rot_speed;
         return rot_speed;
     }
+    else 
+    {
+      return previousSpeed;
+    }
+
 }
