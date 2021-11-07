@@ -17,6 +17,9 @@ float angularSpeed=0;
 float previousSpeed=0;
 long deltaT=0;
 
+float vFilt=0;
+float vpreFilt=0;
+
 void setup() {
   pinMode(IN1,OUTPUT);
   pinMode(IN2,OUTPUT);
@@ -28,7 +31,9 @@ void setup() {
 
 void loop() {
   angularSpeed=read_speed();
-  Serial.print(angularSpeed);
+  vFilt=0.854*vFilt+0.0728*angularSpeed+0.0728*vpreFilt;
+  vpreFilt=angularSpeed;
+  Serial.print(vFilt);
   Serial.print("\t");
   Serial.println(millis());
   analogWrite(ENA,255);
