@@ -34,7 +34,7 @@ void loop() {
   Serial.print(angularSpeed);
   Serial.print("\t");
   Serial.println(millis());
-  analogWrite(ENA,80);
+  analogWrite(ENA,255);
   digitalWrite(IN1,direct);
   digitalWrite(IN2,!direct);
 }
