@@ -18,4 +18,4 @@ legend("Raw speed (RPM)", "Filtered speed (RPM)");
 xlabel("Time (ms)");
 ylabel("Speed (RPM)");
 
-Input=255*ones(length(RPM))';
+Input=255*ones(length(RPM),1);
