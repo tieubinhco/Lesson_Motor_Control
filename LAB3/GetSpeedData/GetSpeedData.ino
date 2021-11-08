@@ -31,10 +31,14 @@ void setup() {
 
 void loop() {
   angularSpeed=read_speed();
+  int pwm=200*(sin(0.5*currentMillis/1e3)>0)+55*(sin(currentMillis/1e3)>0)-200*(sin(0.5*currentMillis/1e3)<0);
+  direct=1*(pwm>0);
+  Serial.print(pwm);
+  Serial.print("\t");
   Serial.print(angularSpeed);
   Serial.print("\t");
   Serial.println(millis());
-  analogWrite(ENA,200);
+  analogWrite(ENA,abs(pwm));
   digitalWrite(IN1,direct);
   digitalWrite(IN2,!direct);
 }
