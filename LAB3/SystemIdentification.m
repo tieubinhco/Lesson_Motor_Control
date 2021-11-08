@@ -19,7 +19,7 @@ end
 B = 1/3*ones(3,1);
 Mfilt = filter(B,1,RPM);
 
-plot(Time,v)
+plot(Time,Mfilt)
 legend("Raw speed (RPM)", "Filtered speed (RPM)");
 xlabel("Time (ms)");
 ylabel("Speed (RPM)");
@@ -28,14 +28,4 @@ yyaxis right
 plot(Time,Input)
 % Input=255*ones(length(RPM),1);
 
-num=55.61;
-den=[1 11.7];
 
-G=tf(num,den)
-figure(2)
-step(255*G)
-
-num2=50.2;
-den2=[1 9.597]
-G2=tf(num2,den2)
-step(G2)
