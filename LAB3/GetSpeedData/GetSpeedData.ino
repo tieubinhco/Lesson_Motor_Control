@@ -31,7 +31,7 @@ void setup() {
 
 void loop() {
   angularSpeed=read_speed();
-  int pwm=200*(sin(0.5*currentMillis/1e3)>0)+55*(sin(currentMillis/1e3)>0)-200*(sin(0.5*currentMillis/1e3)<0);
+  int pwm=(28*(int(currentMillis/1e3)%10)+2)*(currentMillis/1e3<15)-(28*(int(currentMillis/1e3)%10)+2)*(currentMillis/1e3>=15);
   direct=1*(pwm>0);
   Serial.print(pwm);
   Serial.print("\t");

@@ -1,4 +1,4 @@
-A=load('MotorRPM11.csv');
+A=load('MotorRPM12.csv');
 
 RPM=A(:,2);
 Time=A(:,3);
@@ -28,4 +28,7 @@ yyaxis right
 plot(Time,Input)
 % Input=255*ones(length(RPM),1);
 
-
+t=Time;
+for i=2:length(Time)
+    t(i)=Time(i)-Time(i-1);
+end

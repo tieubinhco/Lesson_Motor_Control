@@ -21,8 +21,8 @@ float desiredSpeed=500;
 float error=0;
 int pwmValue=100; //0 - 255 dec 0x00 - 0xFF hex
 int direct=1;  //1 clockwise  //0 counter-clockwise
-float Kp=0.6;  //controlsignal = Kp*error
-float Ki=12;
+float Kp=0.4459;  //controlsignal = Kp*error
+float Ki=1.222;
 float errorIntegral=0;
 
 void setup() {
@@ -43,17 +43,14 @@ float vFilt=0;
 
 
 void loop() {
-  Ki*=0.01;
-  desiredSpeed=500*(sin(0.7*currentMillis/1e3)>0)+200;
+//  desiredSpeed=500*(sin(0.7*currentMillis/1e3)>0)+200;
+desiredSpeed=4*((28*(int(currentMillis/1e3)%10)+2)*(currentMillis/1e3<15)-(28*(int(currentMillis/1e3)%10)+2)*(currentMillis/1e3>=15));
   v_2=v_1;
   v_1=v;
   v=read_speed();
   vFilt=(v+v_1+v_2)/3;
 
- 
-    
   currentSpeed=vFilt;
-  
   error= desiredSpeed-currentSpeed;
   errorIntegral=errorIntegral+error*deltaT/1.0e3;
   pwmValue=Kp*error + Ki*errorIntegral;
@@ -73,8 +70,10 @@ void loop() {
 //  Serial.print("Current speed=\t");
   Serial.print(currentSpeed);
 //  Serial.print("\tDesired speed=\t");
-Serial.print(" ");
-  Serial.println(desiredSpeed);
+  Serial.print(" ");
+  Serial.print(desiredSpeed);
+    Serial.print(" ");
+  Serial.println(pwmValue);
 }
 
 float read_speed(void)
