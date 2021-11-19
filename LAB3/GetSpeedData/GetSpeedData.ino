@@ -10,7 +10,7 @@ long currentEncoder=0;
 long previousEncoder=0;
 long currentMillis=0;
 long previousMillis=0;
-int interval=10;  //ms
+int interval=10;  //ms sample Time
 int direct=1;
 float angularSpeed=0;
 
@@ -30,8 +30,12 @@ void setup() {
 }
 
 void loop() {
-  angularSpeed=read_speed();
-  int pwm=(28*(int(currentMillis/1e3)%10)+2)*(currentMillis/1e3<15)-(28*(int(currentMillis/1e3)%10)+2)*(currentMillis/1e3>=15);
+
+  
+  int pwm=255; //Input
+  
+  angularSpeed=read_speed(); //Output
+  
   direct=1*(pwm>0);
   Serial.print(pwm);
   Serial.print("\t");
